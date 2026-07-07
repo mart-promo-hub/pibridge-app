@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <!-- كود التحويل التلقائي الذي سينقل الزوار إلى موقعك الجديد فوراً -->
-    <meta http-equiv="refresh" content="0; url=https://flourishing-mousse-62f18c.netlify.app/" />
-    <title>جسر باي - تحويل</title>
+    <title>جسر باي</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 <body>
-    <p>يتم تحويلك الآن إلى منصة جسر باي...</p>
+    <h1>مرحباً بك في جسر باي</h1>
+    <button id="auth-btn">تسجيل الدخول باستخدام Pi</button>
+
+    <script>
+        const Pi = window.Pi;
+        document.getElementById('auth-btn').onclick = async () => {
+            try {
+                const user = await Pi.authenticate(['username'], (scopes) => {
+                    alert('تم الحصول على الصلاحيات: ' + scopes);
+                });
+                alert('أهلاً بك: ' + user.username);
+            } catch (err) {
+                alert('خطأ في تسجيل الدخول: ' + err);
+            }
+        };
+    </script>
 </body>
 </html>
