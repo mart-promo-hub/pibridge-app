@@ -10,15 +10,21 @@
     <button id="auth-btn">تسجيل الدخول باستخدام Pi</button>
 
     <script>
+        // 1. تهيئة المكتبة (هذا هو الجزء الذي كان مفقوداً)
         const Pi = window.Pi;
+        Pi.init({ version: "2.0" });
+
+        // 2. تفعيل وظيفة زر تسجيل الدخول
         document.getElementById('auth-btn').onclick = async () => {
             try {
+                // طلب المصادقة بعد التأكد من التهيئة
                 const user = await Pi.authenticate(['username'], (scopes) => {
-                    alert('تم الحصول على الصلاحيات: ' + scopes);
+                    console.log('Scopes: ' + scopes);
                 });
-                alert('أهلاً بك: ' + user.username);
+                alert('أهلاً بك يا: ' + user.username);
             } catch (err) {
-                alert('خطأ في تسجيل الدخول: ' + err);
+                // عرض الخطأ للمستخدم بشكل أوضح
+                alert('خطأ في الاتصال: ' + err.message);
             }
         };
     </script>
