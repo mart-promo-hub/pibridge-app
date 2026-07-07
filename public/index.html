@@ -2,7 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>جسر باي</title>
+    <title>جسر باي - منصة التطوير</title>
+    <!-- استدعاء مكتبة Pi SDK -->
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 <body>
@@ -10,21 +11,25 @@
     <button id="auth-btn">تسجيل الدخول باستخدام Pi</button>
 
     <script>
-        // 1. تهيئة المكتبة (هذا هو الجزء الذي كان مفقوداً)
+        // تهيئة المكتبة
         const Pi = window.Pi;
         Pi.init({ version: "2.0" });
 
-        // 2. تفعيل وظيفة زر تسجيل الدخول
         document.getElementById('auth-btn').onclick = async () => {
             try {
-                // طلب المصادقة بعد التأكد من التهيئة
-                const user = await Pi.authenticate(['username'], (scopes) => {
-                    console.log('Scopes: ' + scopes);
+                // طلب المصادقة
+                const auth = await Pi.authenticate(['username'], (scopes) => {
+                    console.log('Scopes granted: ' + scopes);
                 });
-                alert('أهلاً بك يا: ' + user.username);
+                
+                // الطريقة الصحيحة لاستخراج بيانات المستخدم من كائن الـ auth
+                if (auth && auth.user) {
+                    alert('أهلاً بك يا: ' + auth.user.username);
+                } else {
+                    alert('فشل الحصول على بيانات المستخدم');
+                }
             } catch (err) {
-                // عرض الخطأ للمستخدم بشكل أوضح
-                alert('خطأ في الاتصال: ' + err.message);
+                alert('خطأ: ' + err.message);
             }
         };
     </script>
