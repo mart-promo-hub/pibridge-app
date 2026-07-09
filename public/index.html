@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>جسر باي - منصة التطوير</title>
-    <!-- استدعاء مكتبة Pi SDK -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiBridge</title>
+    
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-</head>
-<body>
-    <h1>مرحباً بك في جسر باي</h1>
-    <button id="auth-btn">تسجيل الدخول باستخدام Pi</button>
+    
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
 
     <script>
-        // تهيئة المكتبة
-        const Pi = window.Pi;
-        Pi.init({ version: "2.0" });
-
-        document.getElementById('auth-btn').onclick = async () => {
-            try {
-                // طلب المصادقة
-                const auth = await Pi.authenticate(['username'], (scopes) => {
-                    console.log('Scopes granted: ' + scopes);
-                });
-                
-                // الطريقة الصحيحة لاستخراج بيانات المستخدم من كائن الـ auth
-                if (auth && auth.user) {
-                    alert('أهلاً بك يا: ' + auth.user.username);
-                } else {
-                    alert('فشل الحصول على بيانات المستخدم');
-                }
-            } catch (err) {
-                alert('خطأ: ' + err.message);
-            }
-        };
+      window.onload = () => {
+        if (window.Pi) {
+          console.log("Pi SDK loaded successfully!");
+        } else {
+          console.warn("Pi SDK not found, please check the connection.");
+        }
+      };
     </script>
-</body>
+  </body>
 </html>
